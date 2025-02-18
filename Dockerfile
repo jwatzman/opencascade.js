@@ -65,10 +65,10 @@ ENTRYPOINT ["/opencascade.js/src/buildFromYaml.py"]
 
 FROM test-image AS custom-build-image
 
+RUN /opencascade.js/src/generateBindings.py
+RUN /opencascade.js/src/compileBindings.py ${threading}
+RUN /opencascade.js/src/compileSources.py ${threading}
 RUN \
-  /opencascade.js/src/generateBindings.py && \
-  /opencascade.js/src/compileBindings.py ${threading} && \
-  /opencascade.js/src/compileSources.py ${threading} && \
   chmod -R 777 /opencascade.js/ && \
   chmod -R 777 /occt
 
